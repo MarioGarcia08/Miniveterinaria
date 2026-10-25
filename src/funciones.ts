@@ -2,6 +2,7 @@ import Notificacion from './classes/Notificacion.js';
 import AdminCitas from './classes/AdminCitas.js';
 import { citaObj, editando } from './variables'
 import { formulario, formularioInput, pacienteInput, propietarioInput, emailInput, fechaInput, sintomasInput } from './selectores'
+import type { Cita } from './types'
 
 const citas = new AdminCitas()
 
@@ -67,6 +68,10 @@ export function generarId() {
 }
 
 export function cargarEdicion(cita: Cita) {
+    if (!pacienteInput || !propietarioInput || !emailInput || !fechaInput || !sintomasInput || !formularioInput) {
+        throw new Error('No se encontraron los campos del formulario de citas')
+    }
+
     Object.assign(citaObj, cita)
 
     pacienteInput.value = cita.paciente
